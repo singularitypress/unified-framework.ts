@@ -1,0 +1,25 @@
+{
+  "name": "unified-framework.ts",
+  "version": "1.0.0",
+  "description": "A unifying GraphQL interface for different REST endpoints.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/singularitypress/unified-framework.ts.git"
+  },
+  "author": "Jay Pandya",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/singularitypress/unified-framework.ts/issues"
+  },
+  "homepage": "https://github.com/singularitypress/unified-framework.ts#readme",
+  "devDependencies": {
+    "dotenv": "^8.2.0",
+    "eslint": "^7.10.0",
+    "nodemon": "^2.0.4",
+    "typescript": "^4.0.3"
+  }
+}
