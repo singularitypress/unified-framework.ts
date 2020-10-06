@@ -1,0 +1,19 @@
+{
+	"eslint.validate": [
+		"javascript",
+		"javascriptreact",
+		"typescript",
+		"typescriptreact"
+	],
+	"editor.codeActionsOnSave": {
+		"source.fixAll.eslint": true
+	},
+	"editor.formatOnSave": false,
+	"eslint.options": {
+		"configFile": ".eslintrc.js"
+	},
+	"javascript.preferences.quoteStyle": "double",
+	"typescript.preferences.quoteStyle": "double",
+	"editor.tabSize": 2,
+	"prettier.trailingComma": "all"
+}
