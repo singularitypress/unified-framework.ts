@@ -1,4 +1,20 @@
-import { GraphQLInt, GraphQLObjectType, GraphQLString } from "graphql";
+import Axios from "axios";
+import { GraphQLInt, GraphQLObjectType, GraphQLSchema, GraphQLString } from "graphql";
+
+const CompanyType = new GraphQLObjectType({
+  name: "Company",
+  fields: {
+    id: {
+      type: GraphQLString,
+    },
+    name: {
+      type: GraphQLString,
+    },
+    description: {
+      type: GraphQLString,
+    },
+  },
+});
 
 const UserType = new GraphQLObjectType({
   name: "User",
@@ -11,6 +27,9 @@ const UserType = new GraphQLObjectType({
     },
     age: {
       type: GraphQLInt,
+    },
+    company: {
+      type: CompanyType,
     },
   },
 });
@@ -26,8 +45,12 @@ const RootQuery = new GraphQLObjectType({
         },
       },
       resolve (parentValue, args) {
-
+        return Axios.get(`http://localhost:3000/users/${args.id}`).then(res => res.data);
       },
     },
   },
+});
+
+export const schema = new GraphQLSchema({
+  query: RootQuery,
 });

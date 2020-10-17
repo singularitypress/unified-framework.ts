@@ -1,25 +1,11 @@
 import express from "express";
 import { graphqlHTTP } from "express-graphql";
-import { buildSchema } from "graphql";
-
-const schema = buildSchema(`
-  type Query {
-    hello: String
-    quoteOfTheDay: String
-    random: Float!
-    rollThreeDice: [Int]
-    rollDice(numDice: Int!, numSides: Int): [Int]
-  }
-`);
-
-const root = {
-};
+import { schema } from "./schemas";
 
 const app = express();
 
 app.use("/graphql", graphqlHTTP({
   schema,
-  rootValue: root,
   graphiql: true,
 }));
 
