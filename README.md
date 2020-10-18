@@ -9,3 +9,8 @@ The goal of this repo is eventually going to be having a unified GraphQL framewo
 
 ## Wrapping external APIs
 In `resolve` for a schema object, you can return an `Axios` call since if GraphQL sees you're returning a `promise`, it's designed to return the data after it's completed.
+
+## Circular References
+The `CompanyType` refers to the `UserType`, and the `UserType` refers to the `CompanyType`. We can see off the bat, that this is going to be annoying because if you define one before the other, you'll be using one before it's actually defined. To get around this, we'll make the `fields` property on `UserType` and `CompanyType` to be a closure. This ensures that both types get declared and defined and the `fields` function gets executed after, so if we need to use either type, they'll have been defined first.
+
+Additionally, you need to set the `GraphQLObjectType<any, any> ` type to the schemas since they're referring to each other, making TypeScript freak out.

@@ -1,46 +1,14 @@
 import Axios from "axios";
 import {
-  GraphQLInt,
   GraphQLObjectType,
   GraphQLSchema,
-  GraphQLString
+  GraphQLString,
+  GraphQLInt,
+  GraphQLList
 } from "graphql";
 
-const CompanyType = new GraphQLObjectType({
-  name: "Company",
-  fields: {
-    id: {
-      type: GraphQLString,
-    },
-    name: {
-      type: GraphQLString,
-    },
-    description: {
-      type: GraphQLString,
-    },
-  },
-});
-
-const UserType = new GraphQLObjectType({
-  name: "User",
-  fields: {
-    id: {
-      type: GraphQLString,
-    },
-    firstName: {
-      type: GraphQLString,
-    },
-    age: {
-      type: GraphQLInt,
-    },
-    company: {
-      type: CompanyType,
-      resolve (parentValue, args) {
-        return Axios.get(`http://localhost:3000/companies/${parentValue.companyId}`).then(res => res.data);
-      },
-    },
-  },
-});
+import { CompanyType } from "./company";
+import { UserType } from "./user";
 
 const RootQuery = new GraphQLObjectType({
   name: "RootQueryType",
