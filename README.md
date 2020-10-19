@@ -11,6 +11,8 @@ The goal of this repo is eventually going to be having a unified GraphQL framewo
 In `resolve` for a schema object, you can return an `Axios` call since if GraphQL sees you're returning a `promise`, it's designed to return the data after it's completed.
 
 ## Circular References
-The `CompanyType` refers to the `UserType`, and the `UserType` refers to the `CompanyType`. We can see off the bat, that this is going to be annoying because if you define one before the other, you'll be using one before it's actually defined. To get around this, we'll make the `fields` property on `UserType` and `CompanyType` to be a closure. This ensures that both types get declared and defined and the `fields` function gets executed after, so if we need to use either type, they'll have been defined first.
-
-Additionally, you need to set the `GraphQLObjectType<any, any> ` type to the schemas since they're referring to each other, making TypeScript freak out.
+* The `CompanyType` refers to the `UserType` in its `field` property, and the `UserType` refers to the `CompanyType` in its `field` property.
+* We can see off the bat, that this is going to be annoying because if you define one before the other, you'll be using the other before it's actually defined.
+  * i.e. If you define `const UserType` before `const CompanyType`, the `UserType` will be referring to `CompanyType` in the `fields` property before `CompanyType` is technically defined.
+* To get around this, we'll make the `fields` property on `UserType` and `CompanyType` to be a closure (function). This ensures that `UserType` and `CompanyType` get declared and defined and the `fields` function gets executed after since it's just a function definition and not just an object, so if we need to use either type, they'll have been defined first.
+* Additionally, you need to set the `GraphQLObjectType<any, any> ` type to the schemas since they're referring to each other, making TypeScript freak out.
