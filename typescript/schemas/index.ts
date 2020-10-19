@@ -1,11 +1,6 @@
 import Axios from "axios";
-import {
-  GraphQLObjectType,
-  GraphQLSchema,
-  GraphQLString,
-  GraphQLInt,
-  GraphQLList
-} from "graphql";
+import { GraphQLObjectType, GraphQLSchema, GraphQLString } from "graphql";
+import { ICompany, IUser } from "../@types";
 
 import { CompanyType } from "./company";
 import { UserType } from "./user";
@@ -21,8 +16,8 @@ const RootQuery = new GraphQLObjectType({
         },
       },
       resolve (parentValue, args) {
-        return Axios.get(`http://localhost:3000/users/${args.id}`).then(
-          (res) => res.data,
+        return Axios.get("http://localhost:3000/users").then((res) =>
+          res.data.find((d: IUser) => d.id === args.id),
         );
       },
     },
@@ -34,7 +29,9 @@ const RootQuery = new GraphQLObjectType({
         },
       },
       resolve (parentValue, args) {
-        return Axios.get(`http://localhost:3000/companies/${args.id}`).then(res => res.data);
+        return Axios.get("http://localhost:3000/companies").then((res) =>
+          res.data.find((d: ICompany) => d.id === args.id),
+        );
       },
     },
   },
