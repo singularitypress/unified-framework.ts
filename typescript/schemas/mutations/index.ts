@@ -1,24 +1,29 @@
-import { GraphQLInt, GraphQLObjectType, GraphQLString } from "graphql";
+import Axios from "axios";
+import { GraphQLInt, GraphQLNonNull, GraphQLObjectType, GraphQLString } from "graphql";
 import { UserType } from "../queries/user";
 
-const mutation = new GraphQLObjectType({
+export const mutation = new GraphQLObjectType({
   name: "Mutation",
   fields: {
     addUser: {
       type: UserType,
       args: {
         firstName: {
-          type: GraphQLString,
+          type: new GraphQLNonNull(GraphQLString),
         },
         age: {
-          type: GraphQLInt,
+          type: new GraphQLNonNull(GraphQLInt),
         },
         companyId: {
           type: GraphQLString,
         },
       },
-      resolve () {
-
+      resolve (parentValue, args) {
+        const { firstName, age } = args;
+        return Axios.post("http://localhost:3000/users", {
+          firstName,
+          age,
+        }).then(res => res.data);
       },
     },
   },
