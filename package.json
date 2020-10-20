@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server",
     "dev": "nodemon --watch ./typescript -e ts --exec \"npm run clean && npm run compile && npm start\"",
-    "build": "npm run clean && npm run build",
+    "build": "npm run clean && npm run compile",
     "clean": "tsc --build --clean",
     "compile": "tsc --build",
     "json:server": "json-server --watch db.json"

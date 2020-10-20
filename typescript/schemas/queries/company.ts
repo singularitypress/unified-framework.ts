@@ -1,5 +1,6 @@
 import Axios from "axios";
 import { GraphQLList, GraphQLObjectType, GraphQLString } from "graphql";
+import { IUser } from "../../@types";
 import { UserType } from "./user";
 
 export const CompanyType: GraphQLObjectType<any, any> = new GraphQLObjectType({
@@ -19,7 +20,7 @@ export const CompanyType: GraphQLObjectType<any, any> = new GraphQLObjectType({
       resolve (parentValue, args) {
         return Axios.get("http://localhost:3000/users").then((res) =>
           res.data.filter(
-            (user: { companyId: string }) => user.companyId === parentValue.id,
+            (user: IUser) => user.companyId === parentValue.id,
           ),
         );
       },

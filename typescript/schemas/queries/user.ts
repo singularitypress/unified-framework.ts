@@ -1,6 +1,6 @@
 import Axios from "axios";
 import { GraphQLObjectType, GraphQLString, GraphQLInt } from "graphql";
-import { ICompany } from "../@types";
+import { ICompany } from "../../@types";
 import { CompanyType } from "./company";
 
 export const UserType: GraphQLObjectType<any, any> = new GraphQLObjectType({
