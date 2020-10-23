@@ -16,18 +16,13 @@
       "id": "416",
       "firstName": "Aubrey",
       "age": 35,
-      "companyId": "3"
+      "companyId": "1"
     },
     {
       "id": "905",
       "firstName": "Abel",
       "age": 47,
       "companyId": "3"
-    },
-    {
-      "firstName": "Tim",
-      "age": 37,
-      "id": "xBFvZQF"
     }
   ],
   "companies": [
