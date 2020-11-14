@@ -104,7 +104,10 @@ dist
 .tern-port
 
 # build dir
-server
+/server
 
 # prototype json
 _db.json
+
+# prototype authentication node_modules (old as dirt, 4+ years old at time of writing)
+prototype-auth/node_modules

@@ -1,6 +1,12 @@
 # Unified Framework
 The goal of this repo is eventually going to be having a unified GraphQL framework that can sit in front a plurality of REST APIs.
 
+## Note
+The basis of the `prototype-auth` code is from https://github.com/StephenGrider/auth-graphql-starter, I would recommend *against* using anything in here as it's based on 4 year old dependencies that are very much insecure.
+
+## TODO
+Re-make the `prototype-auth` code in the main codebase using modern libraries and typescript.
+
 ## Getting Started
 1. Clone this repo to your local machine, and run `npm i` to get your dependencies.
 2. Development is done inside the `typescript` directory
