@@ -103,9 +103,6 @@ dist
 # TernJS port file
 .tern-port
 
-# build dir
-/server
-
 # prototype json
 _db.json
 
