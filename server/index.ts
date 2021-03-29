@@ -2,7 +2,7 @@ import express from "express";
 import path from "path";
 import fs from "fs";
 import { graphqlHTTP } from "express-graphql";
-import { schema } from "./schemas";
+import { schema } from "./schema";
 require("dotenv").config();
 
 const app = express();

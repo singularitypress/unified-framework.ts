@@ -1,6 +1,6 @@
 import Axios from "axios";
 import { GraphQLInt, GraphQLNonNull, GraphQLObjectType, GraphQLString } from "graphql";
-import { UserType } from "../queries/user";
+import { UserType } from "../types";
 
 export const mutation = new GraphQLObjectType({
   name: "Mutation",
@@ -23,7 +23,7 @@ export const mutation = new GraphQLObjectType({
         return Axios.post("http://localhost:3000/users", {
           firstName,
           age,
-        }).then(res => res.data);
+        }).then((res) => res.data);
       },
     },
     deleteUser: {
@@ -34,7 +34,7 @@ export const mutation = new GraphQLObjectType({
         },
       },
       resolve (parentValue, args) {
-        Axios.delete(`http://localhost:3000/users/${args.id}`).then(res => res.data);
+        Axios.delete(`http://localhost:3000/users/${args.id}`).then((res) => res.data);
       },
     },
     editUser: {
@@ -54,7 +54,7 @@ export const mutation = new GraphQLObjectType({
         },
       },
       resolve (parentValue, args) {
-        return Axios.patch(`http://localhost:3000/users/${args.id}`, args).then(res => res.data);
+        return Axios.patch(`http://localhost:3000/users/${args.id}`, args).then((res) => res.data);
       },
     },
   },
