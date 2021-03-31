@@ -39,5 +39,7 @@ export const bnsParser = (rootDir: string) => {
     return totalTransactions;
   }, [] as ITransaction[]) as ITransaction[];
 
-  return transactions;
+  return transactions.sort((a, b) => {
+    return (new Date(a.date).getTime()) - (new Date(b.date).getTime());
+  });
 };
