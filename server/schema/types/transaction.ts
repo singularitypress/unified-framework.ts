@@ -1,4 +1,4 @@
-import { GraphQLObjectType, GraphQLString } from "graphql";
+import { GraphQLFloat, GraphQLObjectType, GraphQLString } from "graphql";
 
 export const TransactionType: GraphQLObjectType<any, any> = new GraphQLObjectType({
   name: "Transaction",
@@ -6,10 +6,13 @@ export const TransactionType: GraphQLObjectType<any, any> = new GraphQLObjectTyp
     date: {
       type: GraphQLString,
     },
-    tx: {
+    description: {
       type: GraphQLString,
     },
-    amt: {
+    amount: {
+      type: GraphQLFloat,
+    },
+    account: {
       type: GraphQLString,
     },
   },

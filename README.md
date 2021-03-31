@@ -134,4 +134,4 @@ fragment companyDeets on Company {
 The result is the same as *fig 3.1.*
 
 ## Mutation Basics
-As per `./typescript/schemas/mutations/index.ts`, we can see that we're not posting an `id` despite the user type having one, and that's because GraphQL seemingly makes that property for you automatically.
+As per `./server/schema/mutations/index.ts`, we can see that we're not posting an `id` despite the user type having one, and that's because GraphQL seemingly makes that property for you automatically.

@@ -1,5 +1,6 @@
 export interface ITransaction {
+  amount: number;
+  account: string;
+  description: string;
   date: string;
-  tx: string;
-  amt: string;
-}
+};
