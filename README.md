@@ -135,3 +135,9 @@ The result is the same as *fig 3.1.*
 
 ## Mutation Basics
 As per `./server/schema/mutations/index.ts`, we can see that we're not posting an `id` despite the user type having one, and that's because GraphQL seemingly makes that property for you automatically.
+
+## Setting up CSV Paths
+### Path structure
+To parse all of your transaction CSVs they need to be set up in a specific (unfortunately opinionated) directory structure. Your directory should look like: `<root>/<bank>/<account>/<filename>.csv`.
+### Using the path
+As per the query in `server/schema/queries/transactions/index.ts`, we're using `process.env.ROOT`; you need to create a `.env` file in the root directory of this project and add: `ROOT=<your directory>`. 
