@@ -15,5 +15,8 @@ export const TransactionType: GraphQLObjectType<any, any> = new GraphQLObjectTyp
     account: {
       type: GraphQLString,
     },
+    institution: {
+      type: GraphQLString,
+    },
   },
 });

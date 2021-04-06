@@ -1,1 +1,1 @@
-export * from "./bns";
+export * from "./parse";

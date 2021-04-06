@@ -3,4 +3,5 @@ export interface ITransaction {
   account: string;
   description: string;
   date: string;
+  institution: string;
 };
