@@ -1,4 +1,5 @@
 import {
+  GraphQLBoolean,
   GraphQLFieldConfigMap,
   GraphQLList,
   GraphQLString,
@@ -7,6 +8,7 @@ import {
 import { ITransaction } from "../../../@types";
 import { TransactionType } from "../../types";
 import { parse } from "../../../services";
+import { monthlyTransactions } from "../../../util";
 
 export const transactionsQueries: Thunk<GraphQLFieldConfigMap<any, any>> = {
   transactions: {
@@ -30,10 +32,13 @@ export const transactionsQueries: Thunk<GraphQLFieldConfigMap<any, any>> = {
       institution: {
         type: GraphQLString,
       },
+      monthly: {
+        type: GraphQLBoolean,
+      },
     },
     resolve (
       parentValue,
-      { startDate, endDate, account, institution, include, exclude },
+      { startDate, endDate, account, institution, include, exclude, monthly },
     ) {
       let filteredData = [...parse(`${process.env.ROOT}`)] as ITransaction[];
 
@@ -85,6 +90,11 @@ export const transactionsQueries: Thunk<GraphQLFieldConfigMap<any, any>> = {
             transaction.institution.toLowerCase() === institution.toLowerCase(),
         );
       }
+
+      if (monthly) {
+        filteredData = monthlyTransactions(filteredData);
+      }
+
       return filteredData;
     },
   },

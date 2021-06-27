@@ -33,7 +33,7 @@ export const parse = (rootDir: string) => {
         const amount = parseFloat(cells[(CSV_SCHEMA as any)[institution][account].amount].replace(/"/g, ""));
         const description = (CSV_SCHEMA as any)[institution][account].description.reduce((str: string, index: number) => {
           return str + `${cells[index]}`;
-        }, "").replace(/"/g, "");
+        }, "").replace(/"/g, "").replace(/\s+/g, " ").replace(/\s$/, "");
         totalTransactions.push({
           date,
           amount,

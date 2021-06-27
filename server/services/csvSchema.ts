@@ -1,3 +1,7 @@
+/**
+ * This thing is designed to illustrate what cells contain these respective fields. For example,
+ * for the bns debit, you should expect the date in cell 0, amount in cell 1, and description in cells 3 and 4.
+ */
 export const CSV_SCHEMA = {
   bns: {
     debit: {
