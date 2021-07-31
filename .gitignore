@@ -110,3 +110,6 @@ _db.json
 prototype-auth/node_modules
 
 fir-auth-server-*.json
+
+# map of payee names vs formatted names
+payee-map.json

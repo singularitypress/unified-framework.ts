@@ -3,6 +3,8 @@ import compression from "compression";
 import { graphqlHTTP } from "express-graphql";
 import { schema } from "./schema";
 import cors, { CorsOptions } from "cors";
+import { wsServer } from "./ws-server";
+
 require("dotenv").config();
 
 const app = express();
@@ -23,4 +25,5 @@ app.use(
 );
 
 app.listen(4000);
+wsServer();
 console.log("Running a GraphQL API server at http://localhost:4000/graphql");
