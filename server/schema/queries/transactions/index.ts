@@ -5,10 +5,9 @@ import {
   GraphQLString,
   Thunk,
 } from "graphql";
-import { ITransaction } from "../../../@types";
+import { ITransaction, ITransactionQueryParams } from "../../../@types";
 import { TransactionType } from "../../types";
-import { parse } from "../../../services";
-import { monthlyTransactions } from "../../../util";
+import { parse, monthlyTransactions } from "../../../services";
 
 export const transactionsQueries: Thunk<GraphQLFieldConfigMap<any, any>> = {
   transactions: {
@@ -38,8 +37,9 @@ export const transactionsQueries: Thunk<GraphQLFieldConfigMap<any, any>> = {
     },
     resolve (
       parentValue,
-      { startDate, endDate, account, institution, include, exclude, monthly },
+      args,
     ) {
+      const { startDate, endDate, account, institution, include, exclude, monthly }: ITransactionQueryParams = args as any;
       let filteredData = [...parse(`${process.env.ROOT}`)] as ITransaction[];
 
       if (startDate) {
@@ -55,25 +55,29 @@ export const transactionsQueries: Thunk<GraphQLFieldConfigMap<any, any>> = {
       }
 
       if (include) {
+        let tmpTx = [] as ITransaction[];
         include.forEach((inclusionTerm: string) => {
-          filteredData = filteredData.filter(
+          tmpTx = [...tmpTx, ...filteredData.filter(
             (transaction) =>
               transaction.description
                 .toLowerCase()
                 .indexOf(inclusionTerm.toLowerCase()) > -1,
-          );
+          )];
         });
+        filteredData = tmpTx;
       }
 
       if (exclude) {
+        let tmpTx = [] as ITransaction[];
         exclude.forEach((exclusionTerm: string) => {
-          filteredData = filteredData.filter(
+          tmpTx = [...tmpTx, ...filteredData.filter(
             (transaction) =>
               transaction.description
                 .toLowerCase()
                 .indexOf(exclusionTerm.toLowerCase()) < 0,
-          );
+          )];
         });
+        filteredData = tmpTx;
       }
 
       if (account) {
