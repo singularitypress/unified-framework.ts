@@ -1,9 +1,9 @@
 import axios from "axios";
-import { GraphQLFieldConfigMap, GraphQLString, Thunk } from "graphql";
+import { GraphQLFieldConfig, GraphQLString, ThunkObjMap } from "graphql";
 import { ICompany, IUser } from "../../../@types";
 import { CompanyType, UserType } from "../../types";
 
-export const proofOfConceptQueries: Thunk<GraphQLFieldConfigMap<any, any>> = {
+export const proofOfConceptQueries: ThunkObjMap<GraphQLFieldConfig<any, any>> = {
   user: {
     type: UserType,
     args: {

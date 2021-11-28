@@ -24,6 +24,7 @@ app.use(
   }),
 );
 
-app.listen(4000);
+app.listen(4000, () => {
+  console.log("Express running on 4000");
+});
 wsServer();
-console.log("Running a GraphQL API server at http://localhost:4000/graphql");

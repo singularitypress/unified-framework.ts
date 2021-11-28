@@ -1,17 +1,17 @@
 import {
   GraphQLBoolean,
-  GraphQLFieldConfigMap,
+  GraphQLFieldConfig,
   GraphQLList,
   GraphQLString,
-  Thunk,
+  ThunkObjMap,
 } from "graphql";
 import { ITransaction, ITransactionQueryParams } from "../../../@types";
 import { TransactionType } from "../../types";
-import { parse, monthlyTransactions } from "../../../services";
+import { parse, monthlyTransactions, keywordRegexp } from "../../../services";
 
-export const transactionsQueries: Thunk<GraphQLFieldConfigMap<any, any>> = {
+export const transactionsQueries: ThunkObjMap<GraphQLFieldConfig<any, any>> = {
   transactions: {
-    type: GraphQLList(TransactionType),
+    type: new GraphQLList(TransactionType),
     args: {
       startDate: {
         type: GraphQLString,
@@ -20,13 +20,13 @@ export const transactionsQueries: Thunk<GraphQLFieldConfigMap<any, any>> = {
         type: GraphQLString,
       },
       include: {
-        type: GraphQLList(GraphQLString),
+        type: new GraphQLList(GraphQLString),
       },
       exclude: {
-        type: GraphQLList(GraphQLString),
+        type: new GraphQLList(GraphQLString),
       },
       account: {
-        type: GraphQLString,
+        type: new GraphQLList(GraphQLString),
       },
       institution: {
         type: GraphQLString,
@@ -55,37 +55,27 @@ export const transactionsQueries: Thunk<GraphQLFieldConfigMap<any, any>> = {
       }
 
       if (include) {
-        let tmpTx = [] as ITransaction[];
-        include.forEach((inclusionTerm: string) => {
-          tmpTx = [...tmpTx, ...filteredData.filter(
-            (transaction) =>
-              transaction.description
-                .toLowerCase()
-                .indexOf(inclusionTerm.toLowerCase()) > -1,
-          )];
-        });
-        filteredData = tmpTx;
+        const inclusionRegExp = keywordRegexp(include);
+        filteredData = filteredData.reduce((currArr, currTx) => {
+          if (currTx.description.toLowerCase().match(inclusionRegExp)) return [...currArr, currTx];
+          else return [...currArr];
+        }, [] as ITransaction[]);
       }
 
       if (exclude) {
-        let tmpTx = [] as ITransaction[];
-        exclude.forEach((exclusionTerm: string) => {
-          tmpTx = [...tmpTx, ...filteredData.filter(
-            (transaction) =>
-              transaction.description
-                .toLowerCase()
-                .indexOf(exclusionTerm.toLowerCase()) < 0,
-          )];
-        });
-        filteredData = tmpTx;
+        const exclusionRegExp = keywordRegexp(exclude);
+        filteredData = filteredData.reduce((currArr, currTx) => {
+          if (!currTx.description.toLowerCase().match(exclusionRegExp)) return [...currArr, currTx];
+          else return [...currArr];
+        }, [] as ITransaction[]);
       }
 
       if (account) {
-        filteredData = filteredData.filter(
-          (transaction) =>
-            transaction.account?.toLowerCase().indexOf(account.toLowerCase()) >
-            -1,
-        );
+        const accountsRegExp = keywordRegexp(account);
+        filteredData = filteredData.reduce((currArr, currTx) => {
+          if (currTx.account.toLowerCase().match(accountsRegExp)) return [...currArr, currTx];
+          else return [...currArr];
+        }, [] as ITransaction[]);
       }
 
       if (institution) {

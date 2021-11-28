@@ -16,7 +16,7 @@ export const CompanyType: GraphQLObjectType<any, any> = new GraphQLObjectType({
       type: GraphQLString,
     },
     users: {
-      type: GraphQLList(UserType),
+      type: new GraphQLList(UserType),
       resolve (parentValue, args) {
         return Axios.get("http://localhost:3000/users").then((res) =>
           res.data.filter(

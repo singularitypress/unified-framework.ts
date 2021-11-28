@@ -1,6 +1,6 @@
 import { readdirSync, readFileSync } from "fs";
 import { ITransaction } from "../@types";
-import { CSV_SCHEMA } from "./csvSchema";
+import { CSV_SCHEMA } from "./csv-schema";
 
 export const parse = (rootDir: string) => {
   const accounts = [] as {

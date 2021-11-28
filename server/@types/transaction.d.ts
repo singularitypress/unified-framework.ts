@@ -9,7 +9,7 @@ export interface ITransaction {
 export interface ITransactionQueryParams {
   startDate: string;
   endDate: string;
-  account: string;
+  account: string[];
   institution: string;
   include: string[];
   exclude: string[];
