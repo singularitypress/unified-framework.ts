@@ -1,6 +1,8 @@
 import {
   GraphQLBoolean,
   GraphQLFieldConfig,
+  GraphQLFloat,
+  GraphQLInt,
   GraphQLList,
   GraphQLString,
   ThunkObjMap,
@@ -34,13 +36,41 @@ export const transactionsQueries: ThunkObjMap<GraphQLFieldConfig<any, any>> = {
       monthly: {
         type: GraphQLBoolean,
       },
+      min: {
+        type: GraphQLInt,
+      },
+      max: {
+        type: GraphQLFloat,
+      },
     },
     resolve (
       parentValue,
       args,
     ) {
-      const { startDate, endDate, account, institution, include, exclude, monthly }: ITransactionQueryParams = args as any;
+      const {
+        startDate = parentValue?.startDate,
+        endDate = parentValue?.endDate,
+        account = parentValue?.account,
+        institution = parentValue?.institution,
+        include = parentValue?.include,
+        exclude = parentValue?.exclude,
+        monthly = parentValue?.monthly,
+        min = parentValue?.min,
+        max = parentValue?.max,
+      }: ITransactionQueryParams = args;
       let filteredData = [...parse(`${process.env.ROOT}`)] as ITransaction[];
+
+      if (typeof min === "number") {
+        filteredData = filteredData.filter(
+          (transaction) => transaction.amount >= min,
+        );
+      }
+
+      if (typeof max === "number") {
+        filteredData = filteredData.filter(
+          (transaction) => transaction.amount <= max,
+        );
+      }
 
       if (startDate) {
         filteredData = filteredData.filter(

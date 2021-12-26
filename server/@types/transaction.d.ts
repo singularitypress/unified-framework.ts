@@ -14,4 +14,6 @@ export interface ITransactionQueryParams {
   include: string[];
   exclude: string[];
   monthly: boolean;
+  min: number;
+  max: number;
 }
