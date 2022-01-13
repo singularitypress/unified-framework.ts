@@ -1,30 +1,23 @@
 import express from "express";
-import compression from "compression";
-import { graphqlHTTP } from "express-graphql";
+import ws from "ws";
+import path from "path";
+import { useServer } from "graphql-ws/lib/use/ws";
 import { schema } from "./schema";
-import cors, { CorsOptions } from "cors";
-import { wsServer } from "./ws-server";
-
-require("dotenv").config();
 
 const app = express();
 
-const options: CorsOptions = {
-  origin: ["http://localhost:3000"],
-};
-
-app.use(compression());
-app.use(cors(options));
-
-app.use(
-  "/graphql",
-  graphqlHTTP({
-    schema,
-    graphiql: true,
-  }),
-);
-
-app.listen(4000, () => {
-  console.log("Express running on 4000");
+app.get("/", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "index.html"));
 });
-wsServer();
+
+app.listen(4001, () => {
+  console.log("Express running on 4001");
+});
+
+const server = new ws.Server({
+  port: 4000,
+  path: "/graphql",
+});
+
+useServer({ schema }, server);
+console.log("running a websocket server on route 4000");

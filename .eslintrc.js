@@ -1,46 +1,32 @@
 module.exports = {
-  env: {
-    es2021: true,
-    node: true,
+  "env": {
+    "es2021": true,
+    "node": true
   },
-  extends: [
-    "standard",
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended"
   ],
-  parser: "@typescript-eslint/parser",
-  parserOptions: {
-    ecmaVersion: 13,
-    sourceType: "module",
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 13,
+    "sourceType": "module"
   },
-  plugins: [
-    "@typescript-eslint",
+  "plugins": [
+    "@typescript-eslint"
   ],
-  rules: {
-    quotes: ["error", "double"],
-    semi: ["error", "always"],
-    "no-unused-vars": 0,
-    "comma-dangle": [
+  "rules": {
+    "indent": [
       "error",
-      {
-        arrays: "always-multiline",
-        objects: "always-multiline",
-        imports: "always-multiline",
-        exports: "always-multiline",
-        functions: "always-multiline",
-      },
+      2
     ],
-    "arrow-parens": ["error", "always"],
-    "space-before-function-paren": [
+    "quotes": [
       "error",
-      {
-        anonymous: "always",
-        named: "always",
-        asyncArrow: "always",
-      },
+      "double"
     ],
-    indent: "off",
-    "@typescript-eslint/explicit-member-accessibility": 2,
-    "no-use-before-define": [0],
-    "@typescript-eslint/no-use-before-define": [1],
-    "@typescript-eslint/indent": ["error", 2],
-  },
+    "semi": [
+      "error",
+      "always"
+    ]
+  }
 };

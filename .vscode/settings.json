@@ -10,7 +10,7 @@
 	},
 	"editor.formatOnSave": false,
 	"eslint.options": {
-		"configFile": ".eslintrc.js"
+		"overrideConfigFile": ".eslintrc.js"
 	},
 	"javascript.preferences.quoteStyle": "double",
 	"typescript.preferences.quoteStyle": "double",
