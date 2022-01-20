@@ -4,7 +4,7 @@ export interface ITransaction {
   description: string;
   date: string;
   institution: string;
-};
+}
 
 export interface ITransactionQueryParams {
   startDate: string;
