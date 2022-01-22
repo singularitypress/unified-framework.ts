@@ -28,9 +28,9 @@ export interface INotionGamePage {
       date: INotionDate | null;
     };
     Platform: {
-      multi_select: {
+      select: {
         name: string;
-      }[];
+      };
     };
     Bought: {
       date: INotionDate | null;
@@ -42,11 +42,12 @@ export interface INotionGamePage {
         };
       }[];
     };
-    "Large Image": {
-      url: string | null;
-    };
-    "Small Image": {
-      url: string | null;
-    }
+  };
+}
+
+export interface IGameImages {
+  [key: string]: {
+    minImage: string;
+    maxImage: string;
   };
 }

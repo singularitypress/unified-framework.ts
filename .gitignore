@@ -113,3 +113,6 @@ fir-auth-server-*.json
 
 # map of payee names vs formatted names
 payee-map.json
+
+# image data
+images.json
