@@ -27,4 +27,21 @@ export const CSV_SCHEMA = {
       description: [0],
     },
   },
+  td: {
+    debit: {
+      date: 0,
+      amount: 2,
+      description: [1]
+    },
+    tfsa: {
+      date: 2,
+      amount: 1,
+      description: [0]
+    },
+    visa: {
+      date: 0,
+      amount: 2,
+      description: [1]
+    }
+  }
 };
