@@ -30,11 +30,11 @@
     -->
     <script
       crossorigin
-      src="https://unpkg.com/react@16/umd/react.development.js"
+      src="https://unpkg.com/react@17/umd/react.development.js"
     ></script>
     <script
       crossorigin
-      src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"
+      src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"
     ></script>
 
     <!--
@@ -48,8 +48,10 @@
   <body>
     <div id="graphiql">Loading...</div>
     <script
-      src="https://unpkg.com/graphiql/graphiql.min.js"
-      type="application/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/graphiql/1.11.4/graphiql.min.js"
+      integrity="sha512-cV42gMZoGPswdzl+9J23yDes0W/gf1Zrsp4Hd7RWYPKhYZM1lVnJhnIHmeNO5dYBKyiZm2oWh9EbB4kLP953yg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
     ></script>
     <script
       src="https://cdn.jsdelivr.net/npm/graphql-ws@5.5.5/umd/graphql-ws.min.js"
@@ -79,7 +81,7 @@
               throwMe = new Error(
                 `Socket closed with event ${err.code} ${
                   err.reason || ""
-                }`.trim()
+                }`.trim(),
               );
             } else {
               // GraphQLError[]
@@ -101,7 +103,7 @@
             if (throwMe) throw throwMe;
             if (pending.length) return { value: pending.shift() };
             return (await new Promise(
-              (resolve, reject) => (deferred = { resolve, reject })
+              (resolve, reject) => (deferred = { resolve, reject }),
             ))
               ? { done: true, value: undefined }
               : { value: pending.shift() };
@@ -118,7 +120,7 @@
           fetcher: subscribe,
           defaultVariableEditorOpen: true,
         }),
-        document.getElementById("graphiql")
+        document.getElementById("graphiql"),
       );
     </script>
   </body>
