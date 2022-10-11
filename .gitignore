@@ -116,3 +116,6 @@ payee-map.json
 
 # image data
 images.json
+
+# db
+db/
