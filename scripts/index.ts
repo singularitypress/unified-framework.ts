@@ -1,5 +1,9 @@
 import { readdirSync, readFileSync, writeFileSync } from "fs";
 import { resolve } from "path";
+import { TArgsKeys } from "../@types";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const sanitizeCommaRegxp = /"[^"]+,[^"]+"/g;
 const sanitizeExtraCharRegxp = /((\s\s)+|(^"|"$|""))|(^"|"$|"")/g;
@@ -7,7 +11,7 @@ const sanitizeExtraCharRegxp = /((\s\s)+|(^"|"$|""))|(^"|"$|"")/g;
 const args = process.argv.slice(2).reduce((obj, arg) => {
   const [key, value] = arg.replace("--", "").split("=");
   return { ...obj, [key]: value };
-}, {} as { [key: string]: string });
+}, {} as { [key in TArgsKeys]: string });
 
 const tx: { [key: string]: string | number }[] = [];
 let csvLines = 0;
@@ -17,15 +21,22 @@ const format = (type: string, cell: string) => {
     case "date":
       return new Date(cell).getTime();
     case "amount":
-      return parseFloat(cell);
+      return Number(cell.replace(/("|\$|\,)/g, ""));
     default:
       return (cell ?? "").replace(sanitizeExtraCharRegxp, "");
   }
 };
 
-if ("root" in args && "schema" in args) {
-  readdirSync(resolve(args.root)).forEach((fileName) => {
-    const file = readFileSync(`${args.root}/${fileName}`, {
+if (
+  "root" in args &&
+  "schema" in args &&
+  "institution" in args &&
+  "account" in args &&
+  "out" in args
+) {
+  const dir = process.env[args.root] ?? "";
+  readdirSync(resolve(dir)).forEach((fileName) => {
+    const file = readFileSync(`${dir}/${fileName}`, {
       encoding: "utf-8",
     });
     const lines = file.split("\n");
@@ -47,27 +58,31 @@ if ("root" in args && "schema" in args) {
         const cells = sanitizedLine.split(",");
 
         tx.push(
-          schema.reduce((tx, key, index) => {
-            if (tx[key]) {
-              return {
-                ...tx,
-                [key]: `${tx[key]} ${format(key, cells[index])}`
+          schema.reduce(
+            (tx, key, index) => {
+              if (tx[key]) {
+                return {
+                  ...tx,
+                  [key]: `${tx[key]} ${format(key, cells[index])}`,
+                };
+              } else if (key === "skip") {
+                return tx;
+              } else {
+                return {
+                  ...tx,
+                  [key]: format(key, cells[index]),
+                };
               }
-            } else if (key === "skip") {
-              return tx;
-            } else {
-              return {
-                ...tx,
-                [key]: format(key, cells[index]),
-              };
-            }
-          }, {} as { [key: string]: string | number }),
+            },
+            {
+              institution: args.institution,
+              account: args.account,
+            } as { [key: string]: string | number },
+          ),
         );
       });
   });
-}
 
-if ("out" in args) {
   try {
     writeFileSync(resolve(`db/${args.out}`), JSON.stringify(tx));
     console.log(
