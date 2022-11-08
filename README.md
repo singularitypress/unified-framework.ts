@@ -15,5 +15,5 @@ If you want to merge the values of multiple columns, you can just reuse a proper
 If you had a folder of Royal Bank CSV statements for a debit card, i.e. `%userprofile%\Documents\bank-statements\rbc\debit`, add it to your .env as whatever you want like IDK_RBC_DEBIT, and your args would look like:
 
 ```bash
-npm run build:db --root=IDK_RBC_DEBIT --schema="date,amount,skip,payee,payee" --institution="rbc" --account="chequing" --out="rbc-debit.json"
+npm run build:db -- --root=IDK_RBC_DEBIT --schema="date,amount,skip,payee,payee" --institution="rbc" --account="chequing" --out="rbc-debit.json"
 ```
