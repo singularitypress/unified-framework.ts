@@ -15,3 +15,6 @@ export interface ITransactionArgs {
   start?: number;
   end?: number;
 }
+
+export * from "./elections";
+export * from "./parties";

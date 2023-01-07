@@ -8,7 +8,7 @@ import {
 } from "graphql-helix";
 import dotenv from "dotenv";
 import cors from "cors";
-import { schema } from "@schema";
+import { schema } from "@graphql/schema";
 import { readdirSync, readFileSync } from "fs";
 import { resolve } from "path";
 import { ITransaction } from "@types";
@@ -28,6 +28,18 @@ const fileData = readdirSync(resolve(__dirname, "../", "db")).reduce(
     ];
   },
   [] as ITransaction[],
+);
+
+const HFER_e = JSON.parse(
+  readFileSync(resolve(__dirname, "..", "elections", "HFER_e.json"), {
+    encoding: "utf-8",
+  }) ?? "[]",
+);
+
+const elections = JSON.parse(
+  readFileSync(resolve(__dirname, "elections", "elections.json"), {
+    encoding: "utf-8",
+  }) ?? "{}",
 );
 
 app.use(express.json());
@@ -58,7 +70,7 @@ app.use("/", async (req, res) => {
       query,
       variables,
       request,
-      schema: schema(fileData),
+      schema: schema(fileData, HFER_e, elections),
     });
 
     sendResult(result, res);
